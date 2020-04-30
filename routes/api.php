@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get("/", function () {
-    dd(env('CLIENT_BASE_URL'));
-    return response()->json([
-        "message" => "Hello World!"
-    ]);
-});
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Api'], function () {
     Route::post('/register', 'Auth\RegisterController@register');
@@ -32,5 +26,5 @@ Route::group(['namespace' => 'Api', 'middleware' => ['jwt.auth']], function () {
     Route::get('auth/logout', 'Auth\LogoutController@logout');
 
     Route::apiResource('/products', 'ProductController');
-    Route::apiResource('products/{product}/reviews/', 'ReviewController');
+    Route::apiResource('products/{product}/reviews', 'ReviewController');
 });
