@@ -17,7 +17,9 @@ class ProductCollection extends ResourceCollection
         return [
             'name' => $this->name,
             'price' => $this->price,
+            'image' => $this->image,
             'discount' => $this->discount,
+            'categoryName' => $this->category->name,
             'link' => [
                 'href' => route('products.show', $this->id),
             ],

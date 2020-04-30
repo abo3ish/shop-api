@@ -17,13 +17,16 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('detail');
+            $table->string('image');
             $table->integer('stock');
             $table->integer('price');
             $table->integer('discount');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
