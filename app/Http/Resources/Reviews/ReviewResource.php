@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Resources\Reviews;
+
+use App\Models\User;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class ReviewResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return [
+            'id' => $this->id,
+            'text' => $this->text,
+            'customer' => User::find($this->user_id)->name,
+            'stars' => $this->stars,
+            'product' => route('products.show', $this->product),
+        ];
+    }
+}
