@@ -58,7 +58,7 @@ class OTPAuthController extends Controller
             $otp->delete();
 
             auth()->user()->update([
-                'verified' => 1
+                'verified_at' => now()
             ]);
 
             return response()->json([

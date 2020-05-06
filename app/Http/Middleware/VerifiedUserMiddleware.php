@@ -15,7 +15,7 @@ class VerifiedUserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!auth()->user()->verified) {
+        if (!auth()->user()->verified_at) {
             return response()->json([
                 'message' => "You Number is not verified"
             ], 401);

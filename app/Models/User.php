@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'mobile_number', 'verified'
+        'name', 'email', 'password', 'mobile_number',
     ];
 
     /**
@@ -35,6 +35,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $casts = [
+        'verified_at' => 'datetime',
     ];
 
     public function getJWTIdentifier()
