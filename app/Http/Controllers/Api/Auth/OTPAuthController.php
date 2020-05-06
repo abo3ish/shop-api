@@ -60,10 +60,10 @@ class OTPAuthController extends Controller
             auth()->user()->update([
                 'verified_at' => now()
             ]);
-                dd(auth()->user());
+
             return response()->json([
                 'success' => true,
-                // 'token' => $token,
+                'token' => $token,
             ], 200);
         }
 
