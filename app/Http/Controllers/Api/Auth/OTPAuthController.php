@@ -57,9 +57,13 @@ class OTPAuthController extends Controller
 
             $otp->delete();
 
+            auth()->user()->update([
+                'verified' => 1
+            ]);
+
             return response()->json([
                 'success' => true,
-                'token' => $token,
+                // 'token' => $token,
             ], 200);
         }
 

@@ -23,19 +23,21 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Api'], function () {
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['jwt.auth']], function () {
-    Route::post('/otp-login', 'Auth\OTPAuthController@login');
+    Route::post('/auth/otp-login', 'Auth\OTPAuthController@login');
+    Route::group(['middleware' => ['VerifiedUser']], function () {
+        Route::get('/me', 'UserController@index');
+        Route::put('/me', 'UserController@update');
 
-    Route::get('/me', 'UserController@index');
-    Route::put('/me', 'UserController@update');
+        Route::get('auth/logout', 'Auth\LogoutController@logout');
 
-    Route::get('auth/logout', 'Auth\LogoutController@logout');
+        Route::apiResource('/products', 'ProductController');
+        Route::apiResource('products/{product}/reviews', 'ReviewController');
 
-    Route::apiResource('/products', 'ProductController');
-    Route::apiResource('products/{product}/reviews', 'ReviewController');
+        Route::apiResource('/categories', 'CategoryController');
 
-    Route::apiResource('/categories', 'CategoryController');
+        Route::resource('cart', 'CartController');
 
-    Route::resource('cart', 'CartController');
+        Route::apiResource('shipping-addresses', 'ShippingAddressController');
+    });
 
-    Route::apiResource('shipping-addresses', 'ShippingAddressController');
 });
