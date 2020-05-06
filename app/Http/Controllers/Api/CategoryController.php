@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Category;
+use App\Model\Product;
+use App\Model\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Products\ProductResource;
+use App\Http\Resources\Categories\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -14,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return CategoryResource::collection(Category::all());
     }
 
     /**
@@ -46,7 +50,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $products = Product::where('category_id', $category->id)->paginate();
+        return ProductResource::collection($products);
     }
 
     /**

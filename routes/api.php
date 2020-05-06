@@ -16,15 +16,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Api'], function () {
     Route::post('/register', 'Auth\RegisterController@register');
+    Route::post('/otp-register', 'Auth\OTPAuthController@register');
     Route::post('/login', 'Auth\LoginController@login');
     Route::get('/login/{service}', 'Auth\SocialLoginController@redirect');
     Route::get('/login/{service}/callback', 'Auth\SocialLoginController@callback');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['jwt.auth']], function () {
-    Route::get('/me', 'MeController@index');
+    Route::post('/otp-login', 'Auth\OTPAuthController@login');
+
+    Route::get('/me', 'UserController@index');
+    Route::put('/me', 'UserController@update');
+
     Route::get('auth/logout', 'Auth\LogoutController@logout');
 
     Route::apiResource('/products', 'ProductController');
     Route::apiResource('products/{product}/reviews', 'ReviewController');
+
+    Route::apiResource('/categories', 'CategoryController');
+
+    Route::resource('cart', 'CartController');
+
+    Route::apiResource('shipping-addresses', 'ShippingAddressController');
 });

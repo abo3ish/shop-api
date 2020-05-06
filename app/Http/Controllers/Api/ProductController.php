@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ProductResource::collection(Product::paginate());
+        return ProductResource::collection(Product::orderBy('category_id', 'asc')->paginate());
     }
 
     /**
@@ -92,10 +92,4 @@ class ProductController extends Controller
         ], Response::HTTP_OK);
     }
 
-    protected function verifiyProductUser($product)
-    {
-        if (auth()->id() !== $product->user_id) {
-            throw new ProductNotBelongsToUser;
-        }
-    }
 }
