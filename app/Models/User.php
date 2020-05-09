@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -56,5 +57,10 @@ class User extends Authenticatable implements JWTSubject
     public function hasSocialLinked($service)
     {
         return (bool) $this->social->where('service', $service)->count();
+    }
+
+    public function cart()
+    {
+        return Cart::instance(auth()->id())->content()->values()->all();
     }
 }

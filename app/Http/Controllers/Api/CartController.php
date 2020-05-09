@@ -134,8 +134,27 @@ class CartController extends Controller
      * @param  \App\Model\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($rowId)
     {
-        $this->cart->destroy();
+        try {
+            $this->cart->remove($rowId);
+            $this->cart->store(auth()->id());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Item deleted successfully'
+            ], 200);
+        } catch(InvalidRowIDException $e) {
+            return response()->json([
+                "success" => false,
+                "message" => "This item is not found in you Cart"
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "message" => "somethings, went wrong"
+            ], 404);
+        }
+
     }
 }

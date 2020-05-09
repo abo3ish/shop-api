@@ -38,6 +38,8 @@ Route::group(['namespace' => 'Api', 'middleware' => ['jwt.auth']], function () {
         Route::resource('cart', 'CartController');
 
         Route::apiResource('shipping-addresses', 'ShippingAddressController');
+
+        Route::post('/checkout', 'OrderController@checkout');
     });
 
 });
