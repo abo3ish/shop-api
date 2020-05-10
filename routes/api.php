@@ -40,6 +40,9 @@ Route::group(['namespace' => 'Api', 'middleware' => ['jwt.auth']], function () {
         Route::apiResource('shipping-addresses', 'ShippingAddressController');
 
         Route::post('/checkout', 'OrderController@checkout');
+
+        Route::get('/orders', 'OrderController@index');
+        Route::get('/orders/{order}', 'OrderController@show');
     });
 
 });

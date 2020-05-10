@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Model\Order;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
@@ -62,5 +62,10 @@ class User extends Authenticatable implements JWTSubject
     public function cart()
     {
         return Cart::instance(auth()->id())->content()->values()->all();
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

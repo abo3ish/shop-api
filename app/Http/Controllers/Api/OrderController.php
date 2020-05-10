@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Model\Order;
 use App\Events\OrderCreated;
 use App\Models\OrderProduct;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Orders\OrderResource;
 use Event;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -15,10 +15,12 @@ class OrderController extends Controller
 {
 
     protected $cart;
+    protected $user;
 
     public function __construct()
     {
         $this->cart = Cart::instance(auth()->id());
+        $this->user = auth()->user();
     }
 
     /**
@@ -28,7 +30,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = $this->user->orders()->orderBy('created_at', 'desc')->get();
+        return OrderResource::collection($orders);
     }
 
     /**
@@ -39,7 +42,6 @@ class OrderController extends Controller
      */
     public function store()
     {
-        // event(new OrderCreated());
         try {
             if ($this->cart->count() == 0) {
                 return collect([
@@ -84,7 +86,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return new OrderResource($order);
     }
 
     public function checkout()

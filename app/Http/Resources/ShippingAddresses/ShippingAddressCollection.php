@@ -14,9 +14,8 @@ class ShippingAddressCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // dd($request);
         return [
-            // 'id' => $this->id,
+            'id' => $this->id,
             'address' => $this->address,
             'mobile_number' => $this->mobile_number,
             'city' => $this->city,
